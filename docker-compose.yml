@@ -1,0 +1,21 @@
+services:
+  database:
+    image: mysql:8.0
+    container_name: glf_mysql
+    restart: unless-stopped
+    command:
+      - --default-authentication-plugin=mysql_native_password
+      - --character-set-server=utf8mb4
+      - --collation-server=utf8mb4_0900_ai_ci
+      - --log-bin-trust-function-creators=1
+    environment:
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_DATABASE: glf_loja_ferramentas
+    ports:
+      - "3306:3306"
+    volumes:
+      - "./GLF - 01 script completo (MySQL).sql:/docker-entrypoint-initdb.d/01-init.sql:ro"
+      - glf_mysql_data:/var/lib/mysql
+
+volumes:
+  glf_mysql_data:

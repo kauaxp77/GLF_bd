@@ -1,0 +1,66 @@
+=============================================================
+GLF - LOJA DE FERRAMENTAS
+RESUMO DE FUNCTIONS, PROCEDURES E TRIGGERS
+=============================================================
+
+-------------------------------------------------------------
+1. FUNCTIONS (Calculos de Consulta - Nao alteram dados)
+-------------------------------------------------------------
+
+1. fn_total_pedido(id_pedido)
+   - O que faz: Soma (quantidade x preco_unitario) de todos os itens do pedido e subtrai o desconto.
+   - Retorno: Valor total liquido a ser pago no pedido.
+
+2. fn_valor_pago(id_pedido)
+   - O que faz: Soma todos os pagamentos com status 'APROVADO' registrados para o pedido.
+   - Retorno: Total de dinheiro que o cliente ja pagou ate o momento.
+
+3. fn_margem_lucro(id_produto)
+   - O que faz: Calcula a formula comercial: ((preco_venda - preco_custo) / preco_venda) * 100.
+   - Retorno: Porcentagem de margem de lucro da loja naquele item.
+
+4. fn_situacao_estoque(id_produto)
+   - O que faz: Compara a quantidade em estoque com o estoque minimo.
+   - Retorno: 'SEM ESTOQUE' (se qtd = 0), 'REPOR ESTOQUE' (se qtd <= estoque_minimo) ou 'OK'.
+
+
+-------------------------------------------------------------
+2. PROCEDURES (Processos Operacionais e Transacoes)
+-------------------------------------------------------------
+
+1. sp_registrar_pagamento(id_pedido, forma, valor, parcelas)
+   - O que faz: Registra um pagamento (PIX, Cartao, Dinheiro). Trava o pedido em transacao, valida se o pedido esta ABERTO, impede pagamento maior que o saldo devedor e, se o valor quitar a conta, muda o status do pedido para 'PAGO' (o que dispara a baixa de estoque).
+
+2. sp_recalcular_total_pedido(id_pedido)
+   - O que faz: Chama a funcao fn_total_pedido e grava o resultado diretamente na coluna 'valor_total' da tabela 'pedido'.
+
+3. sp_relatorio_estoque_baixo()
+   - O que faz: Gera uma listagem com todos os produtos com estoque critico (<= estoque_minimo) e cruza com a tabela de fornecedores para mostrar quem tem o menor preco cotado para reposicao.
+
+
+-------------------------------------------------------------
+3. TRIGGERS (Gatilhos Automaticos de Seguranca e Regras)
+-------------------------------------------------------------
+
+1. trg_movimentacao_bi (BEFORE INSERT em movimentacao_estoque)
+   - O que faz: Impede estoque negativo. Cancela a operacao com erro se a saida for maior que a quantidade disponivel no produto.
+
+2. trg_movimentacao_ai (AFTER INSERT em movimentacao_estoque)
+   - O que faz: Atualiza fisicamente a coluna 'qtd_estoque' na tabela 'produto': soma em ENTRADA, subtrai em SAIDA ou define o valor direto em AJUSTE de inventario.
+
+3. trg_item_pedido_bi (BEFORE INSERT em item_pedido)
+   - O que faz: Bloqueia a insercao de novos produtos se o pedido ja foi PAGO, ENVIADO ou CANCELADO. So aceita incluir itens se o status for 'ABERTO'.
+
+4. trg_item_pedido_ai (AFTER INSERT em item_pedido)
+   - O que faz: Assim que um novo item e inserido, chama sp_recalcular_total_pedido para atualizar o valor_total do pedido sozinho.
+
+5. trg_item_pedido_au (AFTER UPDATE em item_pedido)
+   - O que faz: Se a quantidade ou preco de um item for alterado, chama sp_recalcular_total_pedido para recalcular o valor_total do pedido.
+
+6. trg_item_pedido_ad (AFTER DELETE em item_pedido)
+   - O que faz: Se um item for removido do pedido, chama sp_recalcular_total_pedido para abater do valor_total do pedido.
+
+7. trg_pedido_au (AFTER UPDATE em pedido)
+   - O que faz: Monitora a entrega e devolucao física dos itens:
+     a) Quando o status muda de ABERTO para PAGO: gera automaticamente os registros de SAIDA em movimentacao_estoque para todos os itens vendidos (baixando o estoque).
+     b) Quando um pedido PAGO e CANCELADO: gera automaticamente registros de ENTRADA em movimentacao_estoque para devolver os produtos ao estoque (estorno fiscal).
