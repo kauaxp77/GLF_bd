@@ -16,10 +16,10 @@ Guia prático para execução no **DBeaver** conectado ao container Docker com d
      * `useSSL` = `FALSE`
      * `allowMultiQueries` = `TRUE`
 3. **Limpeza da base (Estado Inicial Garantido):**
-   * Abra o arquivo `GLF - 01 script completo (MySQL).sql`.
+   * Abra o arquivo `sql/GLF - 01 script completo (MySQL).sql`.
    * Pressione **`Alt+X`** (Executar script completo) e aguarde concluir.
 4. **Abrir a demonstração:**
-   * Abra o arquivo `GLF - 02 demonstracao (apresentacao).sql` em **apenas uma aba** de editor SQL.
+   * Abra o arquivo `sql/GLF - 02 demonstracao (apresentacao).sql` em **apenas uma aba** de editor SQL.
 
 ---
 
@@ -131,6 +131,6 @@ Guia prático para execução no **DBeaver** conectado ao container Docker com d
 
 ## 3. Botão de Pânico (Reset Rápido)
 Se houver qualquer clique fora de ordem:
-1. Abra o arquivo `GLF - 01 script completo (MySQL).sql`.
+1. Abra o arquivo `sql/GLF - 01 script completo (MySQL).sql`.
 2. Pressione **`Alt+X`**.
 3. Em 3 segundos a base é restaurada para o estado zero.

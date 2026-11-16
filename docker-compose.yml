@@ -14,7 +14,7 @@ services:
     ports:
       - "3306:3306"
     volumes:
-      - "./GLF - 01 script completo (MySQL).sql:/docker-entrypoint-initdb.d/01-init.sql:ro"
+      - "./sql/GLF - 01 script completo (MySQL).sql:/docker-entrypoint-initdb.d/01-init.sql:ro"
       - glf_mysql_data:/var/lib/mysql
 
 volumes:
