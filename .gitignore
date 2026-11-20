@@ -1,0 +1,13 @@
+# Arquivos temporários do Office
+~$*
+
+# Sistema operacional
+.DS_Store
+Thumbs.db
+
+# IDEs
+.idea/
+.vscode/
+
+# Variáveis de ambiente locais
+.env

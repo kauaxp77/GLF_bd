@@ -1,30 +1,32 @@
-# GLF – Sistema de Gestão de Loja de Ferramentas
+<p align="center">
+  <img src="docs/banner.png" alt="GLF - Sistema de Gestão de Loja de Ferramentas" width="100%">
+</p>
 
-![MySQL 8.0](https://img.shields.io/badge/MySQL-8.0-blue?logo=mysql&logoColor=white)
-![Docker](https://img.shields.io/badge/Docker-Ready-2496ED?logo=docker&logoColor=white)
-![Normalization](https://img.shields.io/badge/Normaliza%C3%A7%C3%A3o-3%C2%AA%20Forma%20Normal-success)
-![Business Rules](https://img.shields.io/badge/SGBD-Triggers%20%26%20Procedures-orange)
-![License](https://img.shields.io/badge/Status-Conclu%C3%ADdo-brightgreen)
+<h1 align="center">🛠️ GLF — Sistema de Gestão de Loja de Ferramentas</h1>
 
-> Projeto de modelagem e implementação de banco de dados relacional para gestão integral de loja de ferramentas, materiais de construção e ferragens. Implementado em **MySQL 8.0** com regras de negócio blindadas no SGBD via **Triggers**, **Stored Procedures** e **Functions**, orquestrado via **Docker Compose**.
+<p align="center">
+  Banco de dados relacional para a gestão de uma loja de ferramentas, materiais de construção e ferragens,
+  com as regras de negócio implementadas <b>dentro do SGBD</b> por meio de <b>triggers</b>, <b>stored procedures</b>
+  e <b>functions</b>.
+</p>
 
----
+<p align="center">
+  <img src="https://img.shields.io/badge/MySQL-8.0-4479A1?style=for-the-badge&logo=mysql&logoColor=white" alt="MySQL 8.0">
+  <img src="https://img.shields.io/badge/Docker-Compose-2496ED?style=for-the-badge&logo=docker&logoColor=white" alt="Docker Compose">
+  <img src="https://img.shields.io/badge/Normaliza%C3%A7%C3%A3o-3FN-1e8f3e?style=for-the-badge" alt="3ª Forma Normal">
+  <img src="https://img.shields.io/badge/Triggers%20%26%20Procedures-SGBD-f59e0b?style=for-the-badge" alt="Triggers e Procedures">
+</p>
 
-## Sumário
-1. [Sobre o Projeto](#-sobre-o-projeto)
-2. [Problema de Negócio e Solução](#-problema-de-negócio-e-solução)
-3. [Como Executar o Projeto](#-como-executar-o-projeto)
-4. [Diagramas de Banco de Dados](#-diagramas-de-banco-de-dados)
-   - [Diagrama de Entidade e Relacionamento (DER Conceitual)](#41-diagrama-de-entidade-e-relacionamento-der-conceitual)
-   - [Modelo Lógico / Físico Relacional](#42-modelo-lógico--físico-relacional)
-5. [Dicionário de Dados (12 Tabelas)](#-dicionário-de-dados)
-6. [Regras de Negócio no SGBD](#-regras-de-negócio-no-sgbd)
-   - [User-Defined Functions (UDFs)](#61-user-defined-functions-udfs)
-   - [Stored Procedures](#62-stored-procedures)
-   - [Triggers](#63-triggers)
-7. [Roteiro de Demonstração e Validação](#-roteiro-de-demonstração-e-validação)
-8. [Estrutura de Arquivos](#-estrutura-de-arquivos)
-9. [Autor e Informações Acadêmicas](#-autor-e-informações-acadêmicas)
+<p align="center">
+  <a href="#-sobre-o-projeto">Sobre</a> •
+  <a href="#-problema-de-negócio-e-solução">Problema</a> •
+  <a href="#-como-executar-o-projeto">Como executar</a> •
+  <a href="#-diagramas-de-banco-de-dados">Diagramas</a> •
+  <a href="#-dicionário-de-dados">Dicionário</a> •
+  <a href="#-regras-de-negócio-no-sgbd">Regras no SGBD</a> •
+  <a href="#-roteiro-de-demonstração-e-validação">Demonstração</a> •
+  <a href="#-estrutura-de-arquivos">Estrutura</a>
+</p>
 
 ---
 
@@ -55,7 +57,7 @@ Lojas de ferramentas operam com alto volume de itens (SKUs), múltiplos forneced
 
 ## 🚀 Como Executar o Projeto
 
-O projeto conta com ambiente completo e reprodutível via **Docker Compose**. O script de estrutura e carga inicial (`GLF - 01`) é executado automaticamente na inicialização do container.
+O projeto conta com ambiente completo e reprodutível via **Docker Compose**. O script de estrutura e carga inicial (`sql/01_script_completo.sql`) é executado automaticamente na inicialização do container.
 
 ### 1. Pré-requisitos
 * [Docker Desktop](https://www.docker.com/products/docker-desktop/) instalado e em execução.
@@ -97,7 +99,7 @@ Para evitar erros de handshake com o MySQL 8 no Docker:
 
 O modelo conceitual descreve as entidades do domínio, atributos-chave e as relações de negócio.
 
-![Diagrama de Entidade e Relacionamento](docs/diagramas/DER%20-%20GLF%20Loja%20de%20Ferramentas.png)
+![Diagrama de Entidade e Relacionamento](docs/diagramas/der_conceitual.png)
 
 #### Mapeamento de Cardinalidades:
 * **`CLIENTE` possui `ENDERECO` (1:N):** Um cliente pode possuir múltiplos endereços cadastrados para entrega ou faturamento; cada endereço pertence exclusivamente a um cliente (`ON DELETE CASCADE`).
@@ -116,7 +118,7 @@ O modelo conceitual descreve as entidades do domínio, atributos-chave e as rela
 
 Representação normalizada até a **Terceira Forma Normal (3FN)** com chaves primárias, estrangeiras e restrições de integridade física.
 
-![Modelo Físico](docs/diagramas/Modelo%20Fisico%20-%20GLF%20Loja%20de%20Ferramentas.png)
+![Modelo Físico](docs/diagramas/modelo_fisico.png)
 
 ---
 
@@ -220,7 +222,7 @@ O diferencial técnico do projeto é a implementação nativa de lógica procedu
 
 ## 🧪 Roteiro de Demonstração e Validação
 
-O arquivo [`GLF - 02 demonstracao (apresentacao).sql`](./sql/GLF%20-%2002%20demonstracao%20(apresentacao).sql) contém o roteiro prático com comprovações de **ANTES** e **DEPOIS**:
+O arquivo [`sql/02_demonstracao.sql`](sql/02_demonstracao.sql) contém o roteiro prático com comprovações de **ANTES** e **DEPOIS**:
 
 ### Fluxo da Demonstração:
 1. **Blocos 1 e 2:** Exibição das functions de cálculo de margem e da procedure de cotação de fornecedores.
@@ -237,27 +239,28 @@ O arquivo [`GLF - 02 demonstracao (apresentacao).sql`](./sql/GLF%20-%2002%20demo
 6. **Bloco 7 (Reposição):** Entrada via compra repõe nível a laser de 2 para 7 unidades e a situação muda de `'REPOR ESTOQUE'` para `'OK'`.
 7. **Bloco 8 (Cancelamento):** Cancelamento do pedido estorna automaticamente as furadeiras de volta a 14 e trenas a 38.
 
-Consulte o roteiro oral detalhado em [`GLF - roteiro da apresentacao.md`](./docs/GLF%20-%20roteiro%20da%20apresentacao.md).
+Para refazer a demonstração do zero, execute de novo o `sql/01_script_completo.sql` (no DBeaver, **Alt+X**) e depois
+o `sql/02_demonstracao.sql`.
 
 ---
 
 ## 📁 Estrutura de Arquivos
 
 ```text
+GLF_bd/
+├── sql/
+│   ├── 01_script_completo.sql          # Tabelas, dados de teste, functions, procedures e triggers
+│   └── 02_demonstracao.sql             # Roteiro prático da apresentação (antes e depois)
 ├── docs/
 │   ├── diagramas/
-│   │   ├── DER - GLF Loja de Ferramentas.png               # Modelo Conceitual (DER)
-│   │   └── Modelo Fisico - GLF Loja de Ferramentas.png      # Modelo Físico/Lógico relacional
-│   ├── Documentacao-TABD - GLF Loja de Ferramentas.pdf      # Documentação formal acadêmica
-│   ├── Documentacao-TABD - GLF Loja de Ferramentas.docx     # Documentação editável
-│   ├── Documentacao-TABD - Template Padrao_20261019-0832.docx # Template padrão
-│   ├── GLF - roteiro da apresentacao.md                # Roteiro passo a passo (5 min)
-│   └── GLF - funcoes, procedures e triggers.txt        # Resumo executivo dos objetos
-├── sql/
-│   ├── GLF - 01 script completo (MySQL).sql            # DDL, seeds, triggers e procedures
-│   └── GLF - 02 demonstracao (apresentacao).sql        # Script executivo da apresentação
-├── docker-compose.yml                                  # Orquestração MySQL 8.0 e volume
-└── README.md                                           # Documentação técnica central
+│   │   ├── der_conceitual.png          # Modelo conceitual (DER)
+│   │   └── modelo_fisico.png           # Modelo lógico/físico relacional
+│   ├── documentacao_glf.pdf            # Documentação acadêmica completa
+│   ├── documentacao_glf.docx           # Versão editável da documentação
+│   ├── funcoes_procedures_triggers.txt # Resumo dos objetos do banco
+│   └── banner.png                      # Banner deste README
+├── docker-compose.yml                  # MySQL 8.0 com carga automática do script
+└── README.md
 ```
 
 ---
